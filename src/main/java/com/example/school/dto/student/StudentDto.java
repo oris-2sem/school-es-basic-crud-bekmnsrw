@@ -25,14 +25,22 @@ public class StudentDto {
     private ParentDto parent;
 
     public static StudentDto from(Student student) {
-        return StudentDto.builder()
+        StudentDto studentDto = StudentDto.builder()
                 .id(student.getId())
                 .firstName(student.getFirstName())
                 .secondName(student.getSecondName())
                 .patronymic(student.getPatronymic())
-                .clazz(ClazzDto.from(student.getClazz()))
-                .parent(ParentDto.from(student.getParent()))
                 .build();
+
+        if (student.getClazz() != null) {
+            studentDto.setClazz(ClazzDto.from(student.getClazz()));
+        }
+
+        if (student.getParent() != null) {
+            studentDto.setParent(ParentDto.from(student.getParent()));
+        }
+
+        return studentDto;
     }
 
     public static List<StudentDto> from(List<Student> students) {
